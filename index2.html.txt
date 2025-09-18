@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>专属浪漫 ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #ff9a9e, #fad0c4, #fbc2eb); 
+      font-family: "微软雅黑", sans-serif;
+      color: white;
+      text-align: center;
+    }
+    .content {
+      z-index: 1;
+      max-width: 85%;
+      animation: fadeIn 2s ease-in-out;
+    }
+    h1 {
+      font-size: clamp(2.5em, 6vw, 4em);
+      text-shadow: 2px 2px 12px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: clamp(1.4em, 4vw, 2em);
+      line-height: 1.6;
+      text-shadow: 1px 1px 8px rgba(0,0,0,0.2);
+      min-height: 2.5em;
+    }
+    .heart {
+      position: fixed;
+      top: -10%;
+      font-size: 2em;
+      pointer-events: none;
+      animation: fall linear forwards;
+      text-shadow: 0 0 8px rgba(255, 182, 193, 0.8);
+    }
+    @keyframes fall {
+      to {
+        transform: translateX(50px) translateY(120vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    button {
+      margin-top: 30px;
+      padding: 12px 22px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(45deg, #ff6bcb, #ffa8a8);
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: 0.2s ease;
+    }
+    button:hover {
+      transform: scale(1.08);
+      background: linear-gradient(45deg, #ff3a99, #ff8787);
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>💌 我想说的话</h1>
+    <p id="typed"></p>
+    <button onclick="showLove()">点我一下 💖</button>
+  </div>
+
+  <!-- 🎶 背景音乐（隐藏） -->
+  <audio id="bgm" src="music.mp3" autoplay loop preload="auto"></audio>
+
+  <script>
+    // 打字机效果
+    const textArray = [
+      "从遇见你的那天起，生活就不再普通 ✨",
+      "你的笑容，是我心底最明亮的星星 🌠",
+      "每个平凡日子，因为你而变得特别 🌹",
+      "说多少次都不够：我喜欢你，永远喜欢你！ ❤️"
+    ];
+    let index = 0;
+    let charIndex = 0;
+    const typedElement = document.getElementById("typed");
+
+    function typeWriter() {
+      if (charIndex < textArray[index].length) {
+        typedElement.innerHTML += textArray[index].charAt(charIndex);
+        charIndex++;
+        setTimeout(typeWriter, 100);
+      } else {
+        setTimeout(() => {
+          charIndex = 0;
+          index = (index + 1) % textArray.length;
+          typedElement.innerHTML = "";
+          typeWriter();
+        }, 2000);
+      }
+    }
+    typeWriter();
+
+    // 飘落特效
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerText = ["💖","💘","💕","💓","🌸","✨","🌹","💎","💫"][Math.floor(Math.random()*9)];
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = (Math.random() * 2 + 1.2) + "em";
+      heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 200);
+
+    // 按钮互动
+    function showLove() {
+      alert("❤️ 你就是我永远的唯一！❤️");
+    }
+
+    // 自动播放兼容（移动端/浏览器限制）
+    document.addEventListener('click', () => {
+      const audio = document.getElementById("bgm");
+      if (audio.paused) {
+        audio.play();
+      }
+    });
+  </script>
+</body>
+</html>
